@@ -10,17 +10,26 @@ module.exports = {
           100: "#FF9001",
           200: "#FF8E01",
         },
+        purple: {
+          DEFAULT: "#8e5cbf",
+          100: "#ac91c6",
+        },
         black: {
           DEFAULT: "#000",
           100: "#1E1E2D",
           200: "#232533",
+        },
+        white: {
+          DEFAULT: "#FFFFFF",
+          100: "#d9d9d9",
         },
         gray: {
           100: "#CDCDE0",
         },
         red: "#850909",
         orange: "#e16c35",
-        yellow: "#e6b52d"
+        yellow: "#e6b52d",
+
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],
