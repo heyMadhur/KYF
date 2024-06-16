@@ -21,7 +21,7 @@ const SignIn = () => {
             <FormField title="Username" placeholder="Username" />
             <FormField title="Password" placeholder="Password" />
 
-            <CustomButton title="Login" handlePress={''} containerStyles="w-[200px]" textStyles="text-red" />
+            <CustomButton title="Login" handlePress={()=>{router.push('barcode-scanner')}} containerStyles="w-[200px]" textStyles="text-red" />
 
             <View className="justify-center pt-5 flex-row gap-2">
                 <Text className="text-lg text-gray-100 font-fregular">Don't have an account, Fr?</Text>
