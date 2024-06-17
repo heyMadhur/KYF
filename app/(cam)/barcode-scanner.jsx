@@ -6,6 +6,7 @@ export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcode, setBarcode] = useState("Not yet Scanned");
+  const [type, setType] = useState(null)
 
   useEffect(() => {
     const getCameraPermissions = async () => {
@@ -19,6 +20,9 @@ export default function App() {
   // What happens when we scan the barcode
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    setType(type)
+    console.log((type))
+    console.log(type === 256)
     setBarcode(data);
   };
 
@@ -44,7 +48,7 @@ export default function App() {
         <CameraView
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
           barcodeScannerSettings={{
-            barcodeTypes: ["qr", "pdf417","code128","code39",'code93','ean13','ean8','upc_a','upc_e','datamatrix','interleaved2of5','itf14','aztec'],
+            barcodeTypes: ["pdf417","code128","code39",'code93','ean13','ean8','upc_a','upc_e','datamatrix','interleaved2of5','itf14','aztec'],
           }}
           style={StyleSheet.absoluteFillObject}
         />

@@ -9,6 +9,12 @@ const CamLayout = () => {
     <>
       <Stack>
         <Stack.Screen
+          name="home"
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
           name="barcode-scanner"
           options={{
             headerShown: false

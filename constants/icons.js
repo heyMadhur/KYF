@@ -12,6 +12,8 @@ import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
 import human from "../assets/icons/human.png";
+import barcodescan from "../assets/icons/barcode-scan.png";
+
 
 export default {
   play,
@@ -28,4 +30,5 @@ export default {
   eyeHide,
   eye,
   human,
+  barcodescan
 };
