@@ -20,6 +20,18 @@ const CamLayout = () => {
             headerShown: false
           }}
         />
+        <Stack.Screen
+          name="success"
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="error"
+          options={{
+            headerShown: false
+          }}
+        />
       </Stack>
       {/* <StatusBar backgroundColor='"#161622' style='light' /> */}
     </>
