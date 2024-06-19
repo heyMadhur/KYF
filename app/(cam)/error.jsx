@@ -19,7 +19,9 @@ const Error = () => {
         textShadowRadius: 5,
       }}>Some Error Occured while Scanning !!</Text>
       <CustomButton title="Scan Again !!" handlePress={() => { router.push('barcode-scanner') }} containerStyles="w-[250px] p-4" textStyles="text-red" />
-
+      <Text>Reasons for Error-:</Text>
+      <Text>1. Product is not Listed in database</Text>
+      <Text>2. Error while fetching detail. Try Again!</Text>
     </View>
   )
 }
