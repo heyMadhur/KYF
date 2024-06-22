@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomButton from '../../components/CustomButton'
 import { images } from '../../constants'
@@ -19,6 +19,7 @@ const SignIn = () => {
       const submit = async() => {
         if(!form.email || !form.password) {
           Alert.alert('Error', "Please fill in all the fields")
+          // return;
         }
         setIsSubmitting(true)
         try{
@@ -64,6 +65,7 @@ const SignIn = () => {
             handleChangeText={(e) => setForm({ ...form, password: e })}
             otherStyles="mt-7" />
 
+            {/* <CustomButton title="Login" handlePress={()=>{router.push('home')}} containerStyles="w-[200px]" textStyles="text-red" /> */}
             <CustomButton title="Login" handlePress={submit} containerStyles="w-[200px]" textStyles="text-red" />
 
             <View className="justify-center pt-5 flex-row gap-2">

@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, Alert } from 'react-native'
 import React, { useState } from 'react'
 import CustomButton from '../../components/CustomButton'
 import { images } from '../../constants'

@@ -13,6 +13,7 @@ export default function App() {
   const [barcode, setBarcode] = useState("Not yet Scanned");
   const [type, setType] = useState(null)
   const [loading, setLoading] = useState(false);  // Loading state
+  // const [flash, setFlash] = useState("off")
 
   // GLOBAL CONTEXT
   const { setProductDetails } = useGlobalContext();
@@ -45,7 +46,6 @@ export default function App() {
     if (barcode !== "Not yet Scanned" && type !== null) {
       getDetails();
     }
-
   }, [barcode, type])
 
 
@@ -84,9 +84,16 @@ export default function App() {
   }
 
   return (
-    <SafeAreaView className="bg-primary" style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView className="bg-primary flex-1 justify-center items-center" style={{border: "black"}}>
+      <Text className="text-4xl font-bold mb-10" style={{
+        textShadowColor: '#b59e92',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 5,
+      }}>Scan the Barcode !!</Text>
       <View style={{ height: 300, width: 300, overflow: 'hidden', borderRadius: 30, justifyContent: 'center', alignItems: 'center' }}>
         <CameraView
+        flash="on"
+        // flashMode='on'
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
           barcodeScannerSettings={{
             barcodeTypes: ["pdf417", "code128", "code39", 'code93', 'ean13', 'ean8', 'upc_a', 'upc_e', 'datamatrix', 'interleaved2of5', 'itf14', 'aztec'],
@@ -94,6 +101,7 @@ export default function App() {
           style={StyleSheet.absoluteFillObject}
         />
       </View>
+      <CustomButton title={"Flashlight On/Off"} containerStyles={"bg-purple-200 rounded-2xl"} textStyles={"text-white text-lg m-4"} />
       <Text className="text-base text-gray-100 text-3xl font-bold mt-20">{barcode}</Text>
       {scanned && (
         <CustomButton title={"Scan again?"} handlePress={() => setScanned(false)} containerStyles="w-[250px] p-4" textStyles="text-red" />

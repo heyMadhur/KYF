@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView, Image } from 'react-native'
+import { View, Text, FlatList, ScrollView, Image, useWindowDimensions } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useGlobalContext } from '../../context/GlobalProvider'
@@ -8,7 +8,9 @@ import { Card, Title, Paragraph } from 'react-native-paper';
 import { icons, images as img } from '../../constants';
 import ScoreBar from '../../components/ScoreBar';
 import NutrientsTable from '../../components/NutrientsTable';
-
+import CustomButton from '../../components/CustomButton';
+import ScoreBar2 from '../../components/ScoreBar2';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Success = () => {
   // GLOBAL CONTEXT
@@ -28,6 +30,15 @@ const Success = () => {
   const images = productDetails.product_images;
   const popularity = productDetails.product_popularity;
 
+  const data = [
+    { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Beijing', population: 527612, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'New York', population: 8538000, color: '#ffffff', legendFontColor: '#7F7F7F', legendFontSize: 15 },
+    { name: 'Moscow', population: 11920000, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
+  ]
+  const {width: screenWidth}= useWindowDimensions()
+
 
   if (!productDetails) {
     return (
@@ -39,59 +50,51 @@ const Success = () => {
   }
   return (
     <SafeAreaView className="bg-primary h-full w-full">
-      <ScrollView contentContainerStyle={{ padding: 20 }}>
-        <View className="flex-1 items-center bg-primary relative">
-          <View className="flex-1 items-center justify-center max-h-[80vh] mt-[-29vh] ml-[-130vw]">
+      <ScrollView contentContainerStyle={{ padding: 10 }}>
+        <View className="flex-1  bg-primary relative">
+          <View className="flex-1 items-center justify-center max-h-[80vh] mt-[-30vh] ">
             <Image className="absolute" source={img.rectangle} />
-            <Image className="w-[121px] h-[144px] mt-[27vh] ml-[60vw]" source={img.logo} />
+            <Image className="w-[286px] h-[281px] mt-[25vh]" source={img.logo} />
           </View>
-          <Text className="font-fbold text-2xl font-fsemibold bg-black text-white rounded-full w-[160px] text-center" style={{
-            textShadowColor: 'yellow',
-            textShadowOffset: { width: 2, height: 2 },
-            textShadowRadius: 5,
-          }}>SCORE: {finalScore / 10}</Text>
-          <ScoreBar score={finalScore / 10} />
-          <Text className="text-3xl font-bold mt-2" style={{
-            textShadowColor: '#b59e92',
-            textShadowOffset: { width: 2, height: 2 },
-            textShadowRadius: 5,
-          }}>Know Your Food App</Text>
-        </View>
-        <Card className='w-full '>
-          <Card.Content className="flex-row justify-center items-center">
-            <Image source={{ uri: images.front.display.en }} style={{ width: 100, height: 100 }} />
-            <View className="border ml-1 flex-1">
-              <Title>Product Details</Title>
-              <Paragraph>Brand: {brand}</Paragraph>
-              <Paragraph>Category: {category}</Paragraph>
+          <CustomButton title={"RESULTS"} textStyles={"text-white text-2xl"} containerStyles={"w-[200px] bg-red-100 rounded-xl min-h-[40px] mt-20 mb-10"} />
 
+          {/* Score Panel */}
+          <View className="flex-row" >
+            {/* Score */}
+            <View className="mr-2">
+              <Text className="text-white text-4xl">SCORE</Text>
+              <Text className="text-white text-2xl font-bold text-center">{Math.round(((finalScore / 1000) * 94) * 10) / 10}</Text>
             </View>
-          </Card.Content>
-        </Card>
-        <Card className='w-full '>
-          <Card.Content className="flex justify-center items-center">
-            <Title>Detailed Analysis</Title>
-            <View className="border">
-              <Title>Nutrition Analysis</Title>
-              <Image source={{ uri: images.nutrition.display.en }} style={{ width: 100, height: 100 }} />
-              {(Object.keys(sufficientNutrients).length !== 0) && <Text>Nutrition In Sufficent Quantity: {sufficientNutrients}</Text>}
-              {(Object.keys(excessiveNutrients).length !== 0) && <Text>Nutrition In Excessive Quantity: {excessiveNutrients}</Text>}
-              {(Object.keys(insufficientNutrients).length !== 0) && <Text>Nutrition In InSufficient Quantity: {insufficientNutrients}</Text>}
-              <Text>Explanation: {explanation}</Text>
-              <NutrientsTable productNutrients={nutrients} />
+            {/* Score Bar */}
+            <View className="flex-1">
+              <ScoreBar2 finalScore={finalScore} />
             </View>
-          </Card.Content>
-        </Card>
-        <Card className='w-full '>
-          <Card.Content className="flex justify-center items-center">
-            <View>
-              <Text>Ingredients</Text>
-              <Image source={{ uri: images.ingredients.display.en }} style={{ width: 100, height: 100 }} />
-            </View>
-            <Text>Eco Grade: {ecograde}</Text>
-            <Text>Product Popularity: {popularity}</Text>
-          </Card.Content>
-        </Card>
+
+          </View>
+        </View>
+
+        <View className="flex-row flex-wrap mt-8">
+          <Text className="text-white text-2xl">REASON: </Text>
+          <Text className="p-2 rounded-xl" style={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}>{explanation}</Text>
+        </View>
+
+        {/* Pie Chart */}
+        <View className="flex flex-wrap mt-8">
+          <Text className="text-white text-2xl">Nutritional Insight </Text>
+          {/* <PieChart /> */}
+          <PieChart
+            data={data}
+            width={screenWidth}
+            height={220}
+            chartConfig={{color: (opacity) => `rgba(255,255,255, ${opacity})`}}
+            accessor="population"
+            backgroundColor="transparent"
+            paddingLeft="15"
+            absolute
+          />
+        </View>
+
+
 
       </ScrollView>
 

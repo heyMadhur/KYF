@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#9c84b9",
+        primary: "#8d8fda",
         secondary: {
           DEFAULT: "#FF9C01",
           100: "#FF9001",
@@ -13,6 +13,8 @@ module.exports = {
         purple: {
           DEFAULT: "#8e5cbf",
           100: "#ac91c6",
+          200: "#8b70cc",
+          300: "#b4b4da"
         },
         black: {
           DEFAULT: "#000",
@@ -26,7 +28,10 @@ module.exports = {
         gray: {
           100: "#CDCDE0",
         },
-        red: "#850909",
+        red: {
+          DEFAULT: "#850909",
+          100: "#fc0000"
+        },
         orange: "#e16c35",
         yellow: "#e6b52d",
 
