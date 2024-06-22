@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView, Image, useWindowDimensions, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, ScrollView, Image, useWindowDimensions, TouchableOpacity, Modal, StyleSheet } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useGlobalContext } from '../../context/GlobalProvider'
@@ -11,8 +11,19 @@ import NutrientsTable from '../../components/NutrientsTable';
 import CustomButton from '../../components/CustomButton';
 import ScoreBar2 from '../../components/ScoreBar2';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState } from 'react';
 
 const Success = () => {
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   // GLOBAL CONTEXT
   const { productDetails } = useGlobalContext();
   // Access values from the productDetails object
@@ -30,19 +41,13 @@ const Success = () => {
   const images = productDetails.product_images;
   const popularity = productDetails.product_popularity;
 
-  console.log("EXC", excessiveNutrients.length)
-  console.log("SUFF", sufficientNutrients.length)
-  console.log("INSUFF", insufficientNutrients.length)
-  
   const data = [
     { name: 'Sufficient Nutrients', population: sufficientNutrients.length, color: 'rgba(0, 255, 10, 0.6)', legendFontColor: 'black', legendFontSize: 15 },
     { name: 'Insufficent Nutrients', population: insufficientNutrients.length, color: 'rgba(255, 0, 0, 0.6)', legendFontColor: 'black', legendFontSize: 15 },
     { name: 'Excessive Nutrients', population: insufficientNutrients.length, color: 'rgba(158, 0, 255, 0.6)', legendFontColor: 'black', legendFontSize: 15 },
   ]
   const { width: screenWidth } = useWindowDimensions()
-  console.log("SCREEN WIDTH", screenWidth)
-  
-  
+
   if (!productDetails) {
     return (
       <View className="flex-1 justify-center items-center p-20 bg-primary">
@@ -85,10 +90,10 @@ const Success = () => {
         <View className="flex flex-wrap mt-8">
           <Text className="text-white text-2xl">Nutritional Insight </Text>
           {/* <PieChart /> */}
-          <TouchableOpacity>
+          <TouchableOpacity onPress={openModal}>
             <PieChart
               data={data}
-              width={screenWidth*0.9}
+              width={screenWidth * 0.9}
               height={220}
               chartConfig={{ color: (opacity) => `rgba(255,255,255, ${opacity})` }}
               accessor="population"
@@ -97,6 +102,35 @@ const Success = () => {
               absolute
             />
           </TouchableOpacity>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={closeModal}
+          >
+            <TouchableOpacity style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }} className="flex-1 justify-center items-center" onPress={closeModal}>
+              <View className="ml-5 mr-5 bg-white rounded-[10px] p-5">
+                {/* Sufficient Nutrients */}
+                <View className="flex-row justify-center items-center">
+                  <Text className="text-lg font-semibold">Sufficient Nutrients: </Text>
+                  {sufficientNutrients.length==0? <Text>None</Text> :<Text>{sufficientNutrients.join(', ')}</Text>}
+                </View>
+                {/* InSufficient Nutrients */}
+                <View className="flex-row items-center mt-4">
+                  <Text className="text-lg font-semibold">Insufficient Nutrients: </Text>
+                  {insufficientNutrients.length==0? <Text>None</Text> :<Text>{insufficientNutrients.join(', ')}</Text>}
+                </View>
+                {/* Excessive Nutrients */}
+                <View className="flex-row items-center mt-4 ">
+                  <Text className="text-lg font-semibold">Excessive Nutrients: </Text>
+                  {excessiveNutrients.length==0? <Text>None</Text> :<Text>{excessiveNutrients.join(', ')}</Text>}
+                </View>
+
+              </View>
+            </TouchableOpacity>
+          </Modal>
+
         </View>
 
 
@@ -106,5 +140,17 @@ const Success = () => {
     </SafeAreaView>
   )
 }
+
+const styles = StyleSheet.create({
+  modalContainer: {
+    width: "90vw",
+    height: "50vh",
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default Success
