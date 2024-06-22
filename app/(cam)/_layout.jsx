@@ -33,6 +33,7 @@ const CamLayout = () => {
           }}
         />
       </Stack>
+      <Text className="bg-primary text-center text-white font-pmedium text-lg">STAY HEALTHY.  LIFE LONG</Text>
       {/* <StatusBar backgroundColor='"#161622' style='light' /> */}
     </>
   )
