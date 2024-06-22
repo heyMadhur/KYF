@@ -1,4 +1,4 @@
-import { View, Text, FlatList, ScrollView, Image, useWindowDimensions } from 'react-native'
+import { View, Text, FlatList, ScrollView, Image, useWindowDimensions, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useGlobalContext } from '../../context/GlobalProvider'
@@ -30,16 +30,19 @@ const Success = () => {
   const images = productDetails.product_images;
   const popularity = productDetails.product_popularity;
 
+  console.log("EXC", excessiveNutrients.length)
+  console.log("SUFF", sufficientNutrients.length)
+  console.log("INSUFF", insufficientNutrients.length)
+  
   const data = [
-    { name: 'Seoul', population: 21500000, color: 'rgba(131, 167, 234, 1)', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Toronto', population: 2800000, color: '#F00', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Beijing', population: 527612, color: 'red', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'New York', population: 8538000, color: '#ffffff', legendFontColor: '#7F7F7F', legendFontSize: 15 },
-    { name: 'Moscow', population: 11920000, color: 'rgb(0, 0, 255)', legendFontColor: '#7F7F7F', legendFontSize: 15 }
+    { name: 'Sufficient Nutrients', population: sufficientNutrients.length, color: 'rgba(0, 255, 10, 0.6)', legendFontColor: 'black', legendFontSize: 15 },
+    { name: 'Insufficent Nutrients', population: insufficientNutrients.length, color: 'rgba(255, 0, 0, 0.6)', legendFontColor: 'black', legendFontSize: 15 },
+    { name: 'Excessive Nutrients', population: insufficientNutrients.length, color: 'rgba(158, 0, 255, 0.6)', legendFontColor: 'black', legendFontSize: 15 },
   ]
-  const {width: screenWidth}= useWindowDimensions()
-
-
+  const { width: screenWidth } = useWindowDimensions()
+  console.log("SCREEN WIDTH", screenWidth)
+  
+  
   if (!productDetails) {
     return (
       <View className="flex-1 justify-center items-center p-20 bg-primary">
@@ -82,16 +85,18 @@ const Success = () => {
         <View className="flex flex-wrap mt-8">
           <Text className="text-white text-2xl">Nutritional Insight </Text>
           {/* <PieChart /> */}
-          <PieChart
-            data={data}
-            width={screenWidth}
-            height={220}
-            chartConfig={{color: (opacity) => `rgba(255,255,255, ${opacity})`}}
-            accessor="population"
-            backgroundColor="transparent"
-            paddingLeft="15"
-            absolute
-          />
+          <TouchableOpacity>
+            <PieChart
+              data={data}
+              width={screenWidth*0.9}
+              height={220}
+              chartConfig={{ color: (opacity) => `rgba(255,255,255, ${opacity})` }}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+          </TouchableOpacity>
         </View>
 
 
